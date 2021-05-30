@@ -1,10 +1,10 @@
 pipeline {
-    agent any
+    agent BuildServer
     stages {
         stage('compile') {
 	   steps {
                 echo 'compiling..'
-		git url: 'https://github.com/lerndevops/DevOpsClassCodes'
+		git url: 'https://github.com/BabuRajan002/Project2-Source-Code.git'
 		sh script: '/opt/apache-maven-3.6.3/bin/mvn compile'
            }
         }
