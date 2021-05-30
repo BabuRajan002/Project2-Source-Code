@@ -1,5 +1,5 @@
 pipeline {
-    agent BuildServer
+	agent {label 'BuildServer'}
     stages {
         stage('compile') {
 	   steps {
