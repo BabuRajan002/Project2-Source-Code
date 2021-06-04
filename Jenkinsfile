@@ -69,6 +69,14 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
+    stage('Deploy Docker container') {
+    agent {
+        label 'DockerServer'
+    }
+      steps{
+        sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER "
+      }
+    }
     }
     
 }
