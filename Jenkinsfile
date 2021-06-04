@@ -12,12 +12,7 @@ pipeline {
 	   steps {
                 echo 'codereview..'
 		sh script: '/opt/apache-maven-3.6.3/bin/mvn -P metrics pmd:pmd'
-           }
-	   post {
-               success {
-		   recordIssues enabledForFailure: true, tool: pmdParser(pattern: '**/target/pmd.xml')
-               }
-           }		
+           }	  	
         }
         stage('unit-test') {
 	   steps {
