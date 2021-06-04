@@ -1,5 +1,11 @@
 pipeline {
-	agent {label 'BuildServer'}
+	agent {
+		label 'BuildServer'
+	      }
+	environment {
+              registry = "babudock/hangout"
+              registryCredential = 'hangout'		
+	         }
     stages {
         stage('compile') {
 	   steps {
@@ -41,6 +47,13 @@ pipeline {
                 echo 'package..'
 		sh script: '/opt/apache-maven-3.6.3/bin/mvn package'	
            }		
+        }
+        stage ('Building a Docker image'){
+        steps {
+            script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+        }
         }
     }
 }
