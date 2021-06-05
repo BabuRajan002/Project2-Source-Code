@@ -77,7 +77,7 @@ pipeline {
         parallel (
             "instance1" : {
                 environment {
-                    def containerId = sh(script: "docker ps --filter status=running -q", returnStdout: false).trim()
+                    containerId = sh(script: "docker ps --filter status=running -q")
                 }
                 when {
                     expression {
@@ -86,7 +86,7 @@ pipeline {
                 }
                 step {
                     sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
-					sh "docker ps -a"
+				          	sh "docker ps -a"
                 }
             }
         )
