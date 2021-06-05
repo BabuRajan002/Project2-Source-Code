@@ -73,7 +73,7 @@ pipeline {
    agent {
         label 'DockerServer'
     }
-          when {'true'}
+          when {true}
                 steps {
                     sh "docker ps -a"
                 }           
