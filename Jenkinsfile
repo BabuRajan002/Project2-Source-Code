@@ -73,17 +73,10 @@ pipeline {
    agent {
         label 'DockerServer'
     }
-            when {
-                expression {
-                    sh(returnStdout: true, script: 'docker ps --filter status=running -q').trim()
-                    
-                }
-            }
-                steps {
-	            sh "docker rm $(docker ps --filter status=running -q)"
-		    sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
-                    sh "docker ps -a"
-                }           
+      steps {
+	      sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
+        sh "docker ps -a"
+       }           
              
      } 
   }
