@@ -69,15 +69,28 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-    stage('Deploy Docker container') {
-    agent {
+    stage ('Deploy to Docker') {
+   agent {
         label 'DockerServer'
     }
-      steps{
-        sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
-        sh "docker ps -a"
+    steps {
+        parallel (
+            "instance1" : {
+                environment {
+                    containerId = sh(script: "docker ps --filter status=running -q", returnStdout: false).trim()
+                }
+                when {
+                    expression {
+                        return containerId.isEmpty()
+                    }
+                }
+                step {
+                    sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
+					sh "docker ps -a"
+                }
+            }
+        )
       }
-    }
-    }
-    
+     } 
+  }
 }
