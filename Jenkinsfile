@@ -77,7 +77,7 @@ pipeline {
         parallel (
             "instance1" : {
                 environment {
-                    containerId = sh(script: "docker ps --filter status=running -q", returnStdout: false).trim()
+                    def containerId = sh(script: "docker ps --filter status=running -q", returnStdout: false).trim()
                 }
                 when {
                     expression {
