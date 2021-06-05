@@ -74,22 +74,14 @@ pipeline {
         label 'DockerServer'
     }
     steps {
-        parallel (
-            "instance1" : {
-                environment {
-                    containerId = sh(script: "docker ps --filter status=running -q")
-                }
-                when {
-                    expression {
-                        return containerId.isEmpty()
-                    }
-                }
+            
+           when { expression { return sh(script: "docker ps --filter status=running -q", returnStdout: false) }}
                 step {
                     sh "docker run -p 8080:8080 -d $registry:$BUILD_NUMBER"
 				          	sh "docker ps -a"
                 }
-            }
-        )
+            
+        
       }
      } 
   }
