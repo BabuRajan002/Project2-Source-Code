@@ -75,7 +75,7 @@ pipeline {
     }
             when {
                 expression {
-                    sh(returnStdout: true, script: 'docker ps --filter status=running -q').trim()
+                    sh(returnStdout: false, script: 'docker ps --filter status=running -q').trim()
                     
                 }
             }
